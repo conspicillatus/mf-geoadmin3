@@ -295,5 +295,12 @@
   "big_size": "",
   "custom_size": "",
   "share_disclaimer": "",
-  "share_preview": ""
+  "share_preview": "",
+  "modify_description": "",
+  "draw_description_placeholder": "",
+  "draw_marker": "",
+  "draw_annotation": "",
+  "draw_linepolygon": "",
+  "draw_freehand": "",
+  "draw_measure": ""
 }
