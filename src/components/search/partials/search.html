@@ -8,7 +8,7 @@
     ng-focus="onFocus()">
     <span class="ga-search-dropdown" ng-show="restat.sets()">
       <!-- footer -->
-      <div class="ga-search-footer clearfix">
+      <div class="ga-search-footer clearfix" ng-if="!options.layersOnly">
         <div class="ga-search-footer-left"></div>
         <div class="ga-search-footer-right">
           <a class="ga-search-contact-icon" title="{{'contact_us' | translate}}" ng-href="http://www.geo.admin.ch/internet/geoportal/{{lang}}/tools/contact.html" target="_blank">
@@ -25,11 +25,11 @@
       </div>
 
       <!-- locations -->
-      <div ng-class="'ga-search-' + restat.sets()">
+      <div ng-class="'ga-search-' + restat.sets()" ng-if="!options.layersOnly">
         <div ga-search-locations ga-search-locations-options="childoptions" ga-search-locations-map="map"></div>
       </div>
       <!-- features -->
-      <div ng-class="'ga-search-' + restat.sets()">
+      <div ng-class="'ga-search-' + restat.sets()" ng-if="!options.layersOnly">
         <div ga-search-features ga-search-features-options="childoptions" ga-search-features-map="map"></div>
       </div>
       <!-- layers -->
