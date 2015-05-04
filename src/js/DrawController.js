@@ -18,6 +18,34 @@
         var black = [0, 0, 0];
 
         $scope.options = $scope.options || {};
+         
+        // Add popup options
+        $scope.options.popupOptions = {
+          title: 'measure',
+          help:'66',
+          x: 0,
+          y: 'auto',
+          container: 'body',
+          position: 'bottom-left'
+        };
+
+        // Add measure options
+        $scope.options.measureOptions = {
+        };
+ 
+        // Add profile options
+        $scope.options.profileOptions = {
+          xLabel: 'profile_x_label',
+          yLabel: 'profile_y_label',
+          margin: {
+             top: 0,
+             right: 20,
+             bottom: 40,
+             left: 60
+          },
+          height: 145,
+          elevationModel: 'COMB'
+        };
 
         // Defines directive options
         $scope.options.showExport =

@@ -13,7 +13,7 @@
   module.directive('gaDraw',
     function($timeout, $translate, $window, $rootScope, gaBrowserSniffer,
         gaDefinePropertiesForLayer, gaDebounce, gaLayerFilters, gaExportKml,
-        gaMapUtils) {
+        gaMapUtils, gaPopup) {
 
         // Find the corresponding style
         var findIcon = function(olIcon, icons) {
@@ -59,6 +59,8 @@
           var draw, lastActiveTool;
           var map = scope.map;
           var source = new ol.source.Vector();
+          scope.isPropsActive = true;
+          scope.options.isProfileActive = false;
           scope.pointTool = scope.options.tools[0];
           scope.complexTools = [
             scope.options.tools[1],
@@ -69,11 +71,7 @@
             source: source,
             visible: true
           });
-          var overlay = new ol.Overlay({
-            offset: [0, -15],
-            positioning: 'bottom-center'
-          });
-          var props = $('.ga-draw-modify');
+
           gaDefinePropertiesForLayer(layer);
           layer.displayInLayerManager = false;
           scope.layers = scope.map.getLayers().getArray();
@@ -91,20 +89,11 @@
           });
           var propsToggle = function(feature) {
             if (feature) {
-              if (!overlay.getElement()) {
-                overlay.setElement(props[0]);
-              }
-              props.show();
-              var coord, geom = feature.getGeometry();
-              if (geom instanceof ol.geom.Polygon) {
-                coord = geom.getInteriorPoint().getCoordinates();
-              } else {
-                coord = geom.getLastCoordinate();
-              }
-              overlay.setPosition(coord);
+              scope.feature = feature;
+              scope.popupToggle = true;
             } else {
-              props.hide();
-              overlay.setPosition(undefined);
+              scope.feature = undefined;
+              scope.popupToggle = false;
             }
           };
           select.getFeatures().on('add', function(evt) {
@@ -145,7 +134,7 @@
                 gaMapUtils.moveLayerOnTop(map, layer);
               });
             }
-            map.addOverlay(overlay);
+            //map.addOverlay(overlay);
             activateSelectInteraction();
           };
 
@@ -153,7 +142,7 @@
           var deactivate = function() {
             deactivateDrawInteraction();
             deactivateSelectInteraction();
-            map.removeOverlay(overlay);
+            //map.removeOverlay(overlay);
           };
 
           // Deactivate other tools
@@ -322,11 +311,6 @@
 
           scope.aToolIsActive = function() {
             return !!lastActiveTool;
-          };
-
-          // hide the overlay with close button
-          scope.hide = function() {
-            overlay.setPosition(undefined);
           };
 
           // Watchers
