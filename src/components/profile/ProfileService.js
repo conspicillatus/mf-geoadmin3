@@ -103,6 +103,12 @@
 
         this.get = function(feature, callback) {
           var coordinates = feature.getGeometry().getCoordinates();
+
+          // TODO: manage all kind of geometry
+          if (feature.getGeometry() instanceof ol.geom.Polygon ||
+              feature.getGeometry() instanceof ol.geom.LinearRing) {
+            coordinates = coordinates[0];
+          }
           var wkt = '{"type":"LineString","coordinates":' +
                     angular.toJson(coordinates) + '}';
           var url = profileUrl + '?geom=' +
